@@ -24,6 +24,8 @@ public class BasicCreateProjectTest {
 
     @Test
     public void loginTodoLy() throws InterruptedException {
+        String myPrject="UpdateProject";
+        
         driver.get("http://todo.ly/");
 
         //------ Login ------
@@ -42,15 +44,46 @@ public class BasicCreateProjectTest {
         //5) Click Add New Project
         driver.findElement(By.xpath("//td[contains(.,'Add New Project') and @class='ProjItemContent']")).click();
         //6) Set NombrProject
-        driver.findElement(By.xpath("//input[@id='NewProjNameInput']")).sendKeys("MyProjectSelenium");
+        // limpiar la caja de texto
+        //driver.findElement(By.xpath("//input[@id='NewProjNameInput']")).clear();
+        driver.findElement(By.xpath("//input[@id='NewProjNameInput']")).sendKeys(myPrject);
         //7) Click Add button
         driver.findElement(By.xpath("//input[@id='NewProjNameButton']")).click();
         //*) //verificacion del nuevo project
         Thread.sleep(3000);
-        String expectedResult="MyProjectSelenium";
+        String expectedResult=myPrject;
         String actualResult=driver.findElement(By.xpath("//div[@id='CurrentProjectTitle']")).getText();
 
         Assert.assertEquals("El projecto no fue creado",expectedResult,actualResult);
+
+        // Update De un project
+
+        // click en el projecto que hemos creado
+
+        driver.findElement(By.xpath("//li[last()]//td[contains(.,'"+myPrject+"') and @class='ProjItemContent']")).click();
+
+        // click en el dropdown button
+        driver.findElement(By.xpath("//div[@style='display: block;']/img[@src='/Images/dropdown.png']")).click();
+        // click edit button
+        driver.findElement(By.xpath("//ul[@id='projectContextMenu']//a[contains(.,'Edit')]")).click();
+        // set nombre projecto actualizado
+
+        driver.findElement(By.id("ItemEditTextbox")).clear();
+        driver.findElement(By.id("ItemEditTextbox")).sendKeys("UPBUpdate");
+        // click save button
+
+        driver.findElement(By.xpath("//li//div[@id='ProjectEditDiv']/*[@id=\"ItemEditSubmit\"]")).click();
+        // verification
+        Thread.sleep(3000);
+        expectedResult="UPBUpdate";
+        actualResult=driver.findElement(By.xpath("//div[@id='CurrentProjectTitle']")).getText();
+
+        Assert.assertEquals("El projecto no fue actualizado",expectedResult,actualResult);
+
+
+
+
+
     }
 
     @After
