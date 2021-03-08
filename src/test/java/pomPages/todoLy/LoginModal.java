@@ -11,4 +11,10 @@ public class LoginModal {
 
     public LoginModal(){}
 
+    public void loginAction(String user, String pwd){
+        emailTextBox.set(user);
+        pwdTextBox.set(pwd);
+        loginButton.click();
+    }
+
 }
