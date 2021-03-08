@@ -65,24 +65,38 @@ public class BasicCreateProjectTest {
         // click en el dropdown button
         driver.findElement(By.xpath("//div[@style='display: block;']/img[@src='/Images/dropdown.png']")).click();
         // click edit button
+        String myPrjectName="DeleteUPBSelenium";
         driver.findElement(By.xpath("//ul[@id='projectContextMenu']//a[contains(.,'Edit')]")).click();
         // set nombre projecto actualizado
 
         driver.findElement(By.id("ItemEditTextbox")).clear();
-        driver.findElement(By.id("ItemEditTextbox")).sendKeys("UPBUpdate");
+        driver.findElement(By.id("ItemEditTextbox")).sendKeys(myPrjectName);
         // click save button
 
         driver.findElement(By.xpath("//li//div[@id='ProjectEditDiv']/*[@id=\"ItemEditSubmit\"]")).click();
         // verification
         Thread.sleep(3000);
-        expectedResult="UPBUpdate";
+        expectedResult=myPrjectName;
         actualResult=driver.findElement(By.xpath("//div[@id='CurrentProjectTitle']")).getText();
 
         Assert.assertEquals("El projecto no fue actualizado",expectedResult,actualResult);
 
+        // Delete Project
 
+        // click en el projecto que hemos creado
+        driver.findElement(By.xpath("//li[last()]//td[contains(.,'"+myPrjectName+"') and @class='ProjItemContent']")).click();
 
+        // click en el dropdown button
+        driver.findElement(By.xpath("//div[@style='display: block;']/img[@src='/Images/dropdown.png']")).click();
 
+        // click opcion de Delete
+        driver.findElement(By.xpath("//ul[@id='projectContextMenu']//a[contains(.,'Delete')]")).click();
+        // click OK de la alerta
+        driver.switchTo().alert().accept();
+        // verificar que el project este borrado
+        Thread.sleep(3000);
+        actualResult=driver.findElement(By.xpath("//div[@id=\"ProjectListPlaceHolder\"]//li[last()]")).getText();
+        Assert.assertFalse("No borro el projecto",myPrjectName.equals(actualResult));
 
     }
 
