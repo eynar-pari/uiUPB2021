@@ -6,7 +6,7 @@ import org.junit.Test;
 import pomPages.todoLy.*;
 import singletonSession.Session;
 
-public class CreateProjectTest {
+public class CreateProjectTest extends  TestBaseTodoLy{
     MainPage mainPage= new MainPage();
     LoginModal loginModal= new LoginModal();
     LeftSection leftSection= new LeftSection();
@@ -17,7 +17,6 @@ public class CreateProjectTest {
     @Test
     public void verify_create_project_todoly() throws InterruptedException {
         String name="CleanProject";
-        Session.getSession().getDriver().get("http://todo.ly/");
         mainPage.loginImage.click();
         loginModal.loginAction(user,pwd);
 
@@ -25,16 +24,11 @@ public class CreateProjectTest {
         leftSection.nameProjectTextBox.set(name);
         leftSection.addButton.click();
 
-        Thread.sleep(2000);
+        this.waitOnSecond(2);
         Assert.assertEquals("ERROR !!Projecto No Creado",name, centerSection.projectNameLabel.getText());
-
-
     }
 
-    @After
-    public void close(){
-        Session.getSession().closeSession();
-    }
+
 
 
 }

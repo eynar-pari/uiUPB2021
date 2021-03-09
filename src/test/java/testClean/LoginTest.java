@@ -9,7 +9,7 @@ import pomPages.todoLy.MenuSection;
 import singletonSession.Session;
 
 
-public class LoginTest {
+public class LoginTest extends  TestBaseTodoLy{
 
     MainPage mainPage= new MainPage();
     LoginModal loginModal= new LoginModal();
@@ -19,7 +19,6 @@ public class LoginTest {
 
     @Test
     public void verify_login_todoly(){
-        Session.getSession().getDriver().get("http://todo.ly/");
         mainPage.loginImage.click();
         loginModal.emailTextBox.set(user);
         loginModal.pwdTextBox.set(pwd);
@@ -27,9 +26,5 @@ public class LoginTest {
         Assert.assertTrue("ERROR, no se logueo",menuSection.logoutButton.controlIsDisplayed());
     }
 
-    @After
-    public void close(){
-        Session.getSession().closeSession();
-    }
 
 }

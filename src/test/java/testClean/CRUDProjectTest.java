@@ -9,7 +9,7 @@ import pomPages.todoLy.LoginModal;
 import pomPages.todoLy.MainPage;
 import singletonSession.Session;
 
-public class CRUDProjectTest {
+public class CRUDProjectTest extends  TestBaseTodoLy {
     MainPage mainPage= new MainPage();
     LoginModal loginModal= new LoginModal();
     LeftSection leftSection= new LeftSection();
@@ -20,7 +20,6 @@ public class CRUDProjectTest {
     @Test
     public void verify_create_project_todoly() throws InterruptedException {
         String name="CleanProject";
-        Session.getSession().getDriver().get("http://todo.ly/");
         mainPage.loginImage.click();
         loginModal.loginAction(user,pwd);
 
@@ -28,7 +27,7 @@ public class CRUDProjectTest {
         leftSection.nameProjectTextBox.set(name);
         leftSection.addButton.click();
 
-        Thread.sleep(2000);
+        this.waitOnSecond(2);
         Assert.assertEquals("ERROR !!Projecto No Creado",name, centerSection.projectNameLabel.getText());
 
         leftSection.clickOnProject(name);
@@ -39,7 +38,7 @@ public class CRUDProjectTest {
         leftSection.editNameProjectTextBox.set(name);
         leftSection.saveOption.click();
 
-        Thread.sleep(2000);
+        this.waitOnSecond(2);
         Assert.assertEquals("ERROR !!Projecto No Actualizado",name, centerSection.projectNameLabel.getText());
 
         leftSection.clickOnProject(name);
@@ -48,16 +47,13 @@ public class CRUDProjectTest {
 
         Session.getSession().getDriver().switchTo().alert().accept();
 
-        Thread.sleep(2000);
+        this.waitOnSecond(2);
         Assert.assertFalse("Projecto No fue Borrado",name.equals(leftSection.lastProjectInListLabel.getText()));
 
 
     }
 
-    @After
-    public void close(){
-        Session.getSession().closeSession();
-    }
+
 
 
 }
