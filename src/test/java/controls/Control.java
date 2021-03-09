@@ -24,6 +24,7 @@ public class Control {
 
     public void set(String value){
         this.findControl();
+        this.control.clear();
         this.control.sendKeys(value);
     }
 
